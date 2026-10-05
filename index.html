@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SplitEasy - Group Expense Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Desktop Sidebar / Mobile Top Bar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-icon"><i data-lucide="layers"></i></div>
+                    <span class="brand-name">SplitEasy</span>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <button class="nav-item active" data-target="home-view">
+                    <i data-lucide="home"></i>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" data-target="home-view"> <!-- Should map to all groups -->
+                    <i data-lucide="users"></i>
+                    <span>Groups</span>
+                </button>
+                <button class="nav-item" data-target="expense-history-view">
+                    <i data-lucide="clock"></i>
+                    <span>Activity</span>
+                </button>
+            </div>
+
+            <div class="user-profile">
+                <div class="avatar">AK</div>
+                <div class="user-info">
+                    <div class="user-name">Ayush Kumar</div>
+                    <div class="user-role">Team Leader</div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Screen 01: Home / My Groups -->
+            <section id="home-view" class="view active">
+                <header class="view-header">
+                    <div class="header-content">
+                        <h1>Dashboard</h1>
+                        <button class="btn btn-primary" onclick="openModal('create-group-modal')">
+                            <i data-lucide="plus"></i> Create Group
+                        </button>
+                    </div>
+                </header>
+
+                <div class="balance-hub">
+                    <div class="balance-card net-balance">
+                        <div class="card-label">Total Net Balance</div>
+                        <div class="card-amount positive">+₹1,450</div>
+                    </div>
+                    <div class="balance-card owe">
+                        <div class="card-label">You Owe</div>
+                        <div class="card-amount negative">₹450</div>
+                        <div class="card-meta">across 1 group</div>
+                    </div>
+                    <div class="balance-card owed">
+                        <div class="card-label">You are Owed</div>
+                        <div class="card-amount positive">₹1,900</div>
+                        <div class="card-meta">across 2 groups</div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2>Active Groups</h2>
+                </div>
+                <div class="groups-grid">
+                    <!-- Group Card 1 -->
+                    <div class="group-card" onclick="navigate('group-details-view')">
+                        <div class="group-card-header">
+                            <div class="group-icon trip">🏖️</div>
+                            <div class="group-title">Goa Trip 2026</div>
+                        </div>
+                        <div class="group-members">
+                            <div class="avatar-stack">
+                                <div class="avatar">AK</div>
+                                <div class="avatar">AM</div>
+                                <div class="avatar">RH</div>
+                                <div class="avatar">DY</div>
+                            </div>
+                            <span class="member-count">4 members</span>
+                        </div>
+                        <div class="group-status">
+                            <div class="badge badge-owed">You are owed ₹1,120</div>
+                        </div>
+                    </div>
+                    <!-- Group Card 2 -->
+                    <div class="group-card" onclick="navigate('group-details-view')">
+                        <div class="group-card-header">
+                            <div class="group-icon home">🏠</div>
+                            <div class="group-title">Flatmates</div>
+                        </div>
+                        <div class="group-members">
+                            <div class="avatar-stack">
+                                <div class="avatar">AK</div>
+                                <div class="avatar">AM</div>
+                                <div class="avatar">RH</div>
+                            </div>
+                            <span class="member-count">3 members</span>
+                        </div>
+                        <div class="group-status">
+                            <div class="badge badge-owe">You owe ₹450</div>
+                        </div>
+                    </div>
+                    <!-- Group Card 3 -->
+                    <div class="group-card" onclick="navigate('group-details-view')">
+                        <div class="group-card-header">
+                            <div class="group-icon party">🎉</div>
+                            <div class="group-title">Birthday Party</div>
+                        </div>
+                        <div class="group-members">
+                            <div class="avatar-stack">
+                                <div class="avatar">AK</div>
+                                <div class="avatar">DY</div>
+                            </div>
+                            <span class="member-count">2 members</span>
+                        </div>
+                        <div class="group-status">
+                            <div class="badge badge-settled">Settled ✓</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2>Recent Activity</h2>
+                </div>
+                <div class="activity-feed">
+                    <div class="activity-item">
+                        <div class="activity-icon bg-food">🍽️</div>
+                        <div class="activity-details">
+                            <div class="activity-title">Dinner at Beach Shack</div>
+                            <div class="activity-meta">Aman paid ₹2,400</div>
+                        </div>
+                        <div class="activity-share negative">
+                            <div>You owe</div>
+                            <div class="amount">₹600</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon bg-travel">✈️</div>
+                        <div class="activity-details">
+                            <div class="activity-title">Flights to Goa</div>
+                            <div class="activity-meta">You paid ₹12,000</div>
+                        </div>
+                        <div class="activity-share positive">
+                            <div>You are owed</div>
+                            <div class="amount">₹9,000</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 03: Group Details -->
+            <section id="group-details-view" class="view">
+                <header class="view-header with-back">
+                    <button class="btn-icon" onclick="navigate('home-view')"><i data-lucide="arrow-left"></i></button>
+                    <div class="header-content">
+                        <div>
+                            <h1>Goa Trip 2026</h1>
+                            <div class="group-meta">4 members • Total spent: ₹8,400</div>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-secondary" onclick="navigate('expense-history-view')">
+                                <i data-lucide="history"></i> History
+                            </button>
+                            <button class="btn btn-accent" onclick="openModal('add-expense-modal')">
+                                <i data-lucide="plus"></i> Add Expense
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="group-layout">
+                    <!-- Left Panel: Balances -->
+                    <div class="panel balances-panel">
+                        <div class="panel-header">
+                            <h2>Your Balance</h2>
+                            <div class="net-status positive">+₹1,120</div>
+                        </div>
+                        
+                        <div class="settlement-cards">
+                            <div class="settlement-card">
+                                <div class="settlement-info">
+                                    <div class="avatar">AM</div>
+                                    <div>
+                                        <div class="settle-text">Aman owes you</div>
+                                        <div class="settle-amount positive">₹520</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-ghost" onclick="openSettleModal('Aman', 520, 'owed')">Remind</button>
+                            </div>
+                            <div class="settlement-card">
+                                <div class="settlement-info">
+                                    <div class="avatar">RH</div>
+                                    <div>
+                                        <div class="settle-text">Rahul owes you</div>
+                                        <div class="settle-amount positive">₹600</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-ghost" onclick="openSettleModal('Rahul', 600, 'owed')">Remind</button>
+                            </div>
+                            <!-- Screen 06: Balances & Settle Up snippet -->
+                            <div class="settlement-card action-needed">
+                                <div class="settlement-info">
+                                    <div class="avatar">DY</div>
+                                    <div>
+                                        <div class="settle-text">You owe Diya</div>
+                                        <div class="settle-amount negative">₹450</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-secondary" onclick="openSettleModal('Diya', 450, 'owe')">Settle</button>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-secondary w-full mt-4" onclick="openSettleModal('All', 0, 'all')">
+                            View All Balances
+                        </button>
+                    </div>
+
+                    <!-- Right Panel: Recent Expenses -->
+                    <div class="panel expenses-panel">
+                        <div class="panel-header">
+                            <h2>Recent Expenses</h2>
+                        </div>
+                        <div class="activity-feed">
+                            <div class="activity-item" onclick="openModal('split-options-modal')">
+                                <div class="activity-icon bg-food">🍽️</div>
+                                <div class="activity-details">
+                                    <div class="activity-title">Dinner at Beach Shack</div>
+                                    <div class="activity-meta">Aman paid ₹2,400 • Oct 5</div>
+                                </div>
+                                <div class="activity-share negative">
+                                    <div>You owe</div>
+                                    <div class="amount">₹600</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon bg-travel">✈️</div>
+                                <div class="activity-details">
+                                    <div class="activity-title">Taxi to Hotel</div>
+                                    <div class="activity-meta">You paid ₹800 • Oct 5</div>
+                                </div>
+                                <div class="activity-share positive">
+                                    <div>You are owed</div>
+                                    <div class="amount">₹600</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon bg-stay">🏨</div>
+                                <div class="activity-details">
+                                    <div class="activity-title">Hotel Advance</div>
+                                    <div class="activity-meta">Diya paid ₹5,200 • Oct 4</div>
+                                </div>
+                                <div class="activity-share negative">
+                                    <div>You owe</div>
+                                    <div class="amount">₹1,300</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 07: Expense History -->
+            <section id="expense-history-view" class="view">
+                <header class="view-header with-back">
+                    <button class="btn-icon" onclick="navigate('group-details-view')"><i data-lucide="arrow-left"></i></button>
+                    <div class="header-content">
+                        <h1>Expense History</h1>
+                    </div>
+                </header>
+                
+                <div class="filter-bar">
+                    <select class="filter-select"><option>All Members</option><option>Ayush</option><option>Aman</option></select>
+                    <select class="filter-select"><option>All Categories</option><option>Food</option><option>Travel</option></select>
+                    <select class="filter-select"><option>Date Range</option><option>This Week</option><option>Last Month</option></select>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-group">
+                        <div class="timeline-date">Today</div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-food">🍽️</div>
+                            <div class="activity-details">
+                                <div class="activity-title">Dinner at Beach Shack</div>
+                                <div class="activity-meta">Aman paid ₹2,400 • Total</div>
+                            </div>
+                            <div class="activity-share">
+                                <div class="badge badge-owe">Active Split</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-group">
+                        <div class="timeline-date">Yesterday</div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-stay">🏨</div>
+                            <div class="activity-details">
+                                <div class="activity-title">Hotel Settlement</div>
+                                <div class="activity-meta">You paid Diya ₹1,300 via UPI</div>
+                            </div>
+                            <div class="activity-share">
+                                <div class="badge badge-settled">✓ Settled</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Bottom Nav -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-target="home-view">
+                <i data-lucide="home"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-item" data-target="home-view">
+                <i data-lucide="users"></i>
+                <span>Groups</span>
+            </button>
+            <button class="nav-item" data-target="expense-history-view">
+                <i data-lucide="clock"></i>
+                <span>Activity</span>
+            </button>
+            <button class="nav-item">
+                <i data-lucide="user"></i>
+                <span>Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Screen 02: Create Group Modal -->
+    <div id="create-group-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Create New Group</h2>
+                <button class="btn-icon" onclick="closeModal('create-group-modal')"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Group Name</label>
+                    <input type="text" class="input-field" placeholder="e.g. Goa Trip 2026" value="Goa Trip 2026">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <div class="pill-selector">
+                        <div class="pill active">✈️ Trip</div>
+                        <div class="pill">🏠 Home</div>
+                        <div class="pill">🎉 Event</div>
+                        <div class="pill">🍽️ Dining</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Add Members</label>
+                    <div class="input-with-button">
+                        <input type="text" class="input-field" placeholder="Name or email">
+                        <button class="btn btn-secondary">Add</button>
+                    </div>
+                </div>
+                <div class="member-roster">
+                    <div class="member-chip">
+                        <div class="avatar sm">AK</div>
+                        <span>Ayush (You)</span>
+                    </div>
+                    <div class="member-chip">
+                        <div class="avatar sm">AM</div>
+                        <span>Aman</span>
+                        <i data-lucide="x" class="remove-icon"></i>
+                    </div>
+                    <div class="member-chip">
+                        <div class="avatar sm">RH</div>
+                        <span>Rahul</span>
+                        <i data-lucide="x" class="remove-icon"></i>
+                    </div>
+                    <div class="member-chip">
+                        <div class="avatar sm">DY</div>
+                        <span>Diya</span>
+                        <i data-lucide="x" class="remove-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('create-group-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="closeModal('create-group-modal')">Create Group</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 04: Add Expense Modal -->
+    <div id="add-expense-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add Expense</h2>
+                <button class="btn-icon" onclick="closeModal('add-expense-modal')"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="expense-amount-input">
+                    <span class="currency">₹</span>
+                    <input type="number" class="amount-field" placeholder="0.00" value="2400">
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="input-field" placeholder="What was this for?" value="Dinner at Beach Shack">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <div class="pill-selector">
+                        <div class="pill active">🍽️ Food</div>
+                        <div class="pill">✈️ Travel</div>
+                        <div class="pill">🏨 Stay</div>
+                        <div class="pill">🛍️ Others</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label>Paid By</label>
+                        <select class="input-field">
+                            <option>Aman</option>
+                            <option>Ayush</option>
+                            <option>Rahul</option>
+                            <option>Diya</option>
+                        </select>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Date</label>
+                        <input type="date" class="input-field" value="2026-10-05">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-accent w-full" onclick="openModal('split-options-modal'); closeModal('add-expense-modal');">
+                    Continue to Split <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 05: Split Options Modal -->
+    <div id="split-options-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Split Options</h2>
+                <button class="btn-icon" onclick="closeModal('split-options-modal')"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="segmented-control">
+                    <button class="segment active" onclick="setSplitMethod('equal')">= Equally</button>
+                    <button class="segment" onclick="setSplitMethod('exact')">₹ Exact</button>
+                    <button class="segment" onclick="setSplitMethod('percent')">% Percent</button>
+                </div>
+                
+                <div class="validation-box valid" id="split-validation">
+                    <i data-lucide="check-circle-2"></i>
+                    <span>Perfectly Split (Total: ₹2,400 | Assigned: ₹2,400 | Remaining: ₹0)</span>
+                </div>
+
+                <div class="split-roster">
+                    <div class="split-row">
+                        <div class="split-user">
+                            <div class="avatar sm">AK</div>
+                            <span>Ayush</span>
+                        </div>
+                        <div class="split-input-wrapper">
+                            <span class="currency">₹</span>
+                            <input type="number" class="split-input" value="600" disabled>
+                        </div>
+                    </div>
+                    <div class="split-row">
+                        <div class="split-user">
+                            <div class="avatar sm">AM</div>
+                            <span>Aman</span>
+                        </div>
+                        <div class="split-input-wrapper">
+                            <span class="currency">₹</span>
+                            <input type="number" class="split-input" value="600" disabled>
+                        </div>
+                    </div>
+                    <div class="split-row">
+                        <div class="split-user">
+                            <div class="avatar sm">RH</div>
+                            <span>Rahul</span>
+                        </div>
+                        <div class="split-input-wrapper">
+                            <span class="currency">₹</span>
+                            <input type="number" class="split-input" value="600" disabled>
+                        </div>
+                    </div>
+                    <div class="split-row">
+                        <div class="split-user">
+                            <div class="avatar sm">DY</div>
+                            <span>Diya</span>
+                        </div>
+                        <div class="split-input-wrapper">
+                            <span class="currency">₹</span>
+                            <input type="number" class="split-input" value="600" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary w-full" onclick="closeModal('split-options-modal')">Save Expense</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 06: Settle Up Modal -->
+    <div id="settle-up-modal" class="modal-overlay">
+        <div class="modal settle-modal">
+            <div class="modal-header">
+                <h2>Settle Up</h2>
+                <button class="btn-icon" onclick="closeModal('settle-up-modal')"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="settle-flow">
+                    <div class="avatar lg">AK</div>
+                    <div class="flow-arrow">
+                        <div class="flow-amount">₹450</div>
+                        <i data-lucide="arrow-right"></i>
+                    </div>
+                    <div class="avatar lg">DY</div>
+                </div>
+                <h3 class="mt-4">You are paying Diya</h3>
+                
+                <div class="payment-methods mt-6">
+                    <p class="text-left mb-2 text-sm text-slate">Choose Payment Method</p>
+                    <div class="method-option">
+                        <div class="method-icon"><i data-lucide="smartphone"></i></div>
+                        <div class="method-name">UPI / GPay</div>
+                        <div class="radio-circle active"></div>
+                    </div>
+                    <div class="method-option">
+                        <div class="method-icon"><i data-lucide="landmark"></i></div>
+                        <div class="method-name">Bank Transfer</div>
+                        <div class="radio-circle"></div>
+                    </div>
+                    <div class="method-option">
+                        <div class="method-icon"><i data-lucide="banknote"></i></div>
+                        <div class="method-name">Cash</div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary w-full" onclick="confirmSettle()">Mark as Settled</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i data-lucide="check-circle-2"></i>
+        <span id="toast-message">Payment marked as settled</span>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
